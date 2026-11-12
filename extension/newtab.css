@@ -1,0 +1,122 @@
+/* 新标签页（居中启动台）：顶部一条品牌与操作，正中是时钟、搜索和分类标签，网址是按分类成组的图标磁贴。
+ * 品牌蓝只用在主按钮、选中项和焦点上；颜色全部来自 tokens.css */
+
+/* ---------- 布局 ---------- */
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 28px; }
+.brand { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.brand img { border-radius: 8px; }
+.top-acts { display: flex; align-items: center; gap: 8px; }
+.top-acts .icon-btn { width: 40px; height: 40px; }
+.hero-add input { width: 260px; max-width: 60vw; height: 40px; padding: 0 12px; border: 1.5px solid var(--sl-brand); border-radius: var(--sl-control-radius); background: var(--sl-surface); outline: none; }
+.main { width: 100%; max-width: 920px; margin: 0 auto; padding: 56px 24px 80px; display: flex; flex-direction: column; gap: 36px; }
+
+/* ---------- 时钟：大号时间，下面一行问候和日期 ---------- */
+.clock { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.time { font-size: 76px; line-height: 1; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.clock-sub { display: flex; gap: 10px; color: var(--sl-muted); font-size: 14px; }
+
+/* ---------- 搜索框 + 分类标签 ---------- */
+.find { display: flex; flex-direction: column; gap: 14px; }
+.search { display: flex; align-items: center; gap: 12px; height: 54px; padding: 0 14px 0 18px; border-radius: 16px; background: var(--sl-surface); box-shadow: var(--sl-card-shadow); color: var(--sl-muted); }
+.search:focus-within { box-shadow: 0 0 0 1px var(--sl-brand), 0 0 0 4px var(--sl-brand-soft); }
+.search input { flex: 1; min-width: 0; border: 0; background: none; outline: none; color: var(--sl-ink); font-size: 16px; }
+.search input:focus-visible { outline: none; }
+.nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
+.nav-item { height: 34px; max-width: 12em; padding: 0 14px; border-radius: 999px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nav-item:hover { background: var(--sl-hover); }
+/* 空分类压成次要色，不再显示数量 */
+.nav-item.nil { color: var(--sl-muted); }
+.nav-item.on { background: var(--sl-brand-soft); color: var(--sl-brand-strong); font-weight: 600; }
+.nav .add-cat { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 999px; color: var(--sl-muted); }
+.nav .add-cat:hover { color: var(--sl-brand-strong); background: var(--sl-brand-soft); }
+.nav input { width: 9em; height: 34px; padding: 0 12px; border: 1.5px solid var(--sl-brand); border-radius: 999px; background: var(--sl-surface); outline: none; }
+
+/* ---------- 网址列表：分类成组横向排开，放不下就折行；组内是图标磁贴 ---------- */
+#list { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px 40px; }
+.sec { display: flex; flex-direction: column; gap: 10px; max-width: 100%; }
+.sec-head { display: flex; align-items: center; gap: 4px; min-height: 28px; padding: 0 4px; }
+.sec-title { font-size: 13px; font-weight: 600; color: var(--sl-muted); cursor: default; }
+.sec-head input { width: 9em; max-width: 100%; padding: 2px 8px; border: 1.5px solid var(--sl-brand); border-radius: 8px; background: var(--sl-surface); outline: none; font-size: 13px; font-weight: 600; }
+.sec-acts { display: flex; gap: 2px; opacity: 0; transition: opacity .12s; }
+.sec:hover .sec-acts, .sec-acts:focus-within { opacity: 1; }
+.sec-head .icon-btn { width: 28px; height: 28px; }
+.tiles { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.card { position: relative; width: 136px; transition: box-shadow var(--sl-duration); }
+.card:hover { box-shadow: var(--sl-hover-shadow); }
+.card-main { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 18px 10px 14px; border-radius: var(--sl-card-radius); }
+.card .fav { border-radius: 13px; }
+.card-text { display: flex; flex-direction: column; align-items: center; gap: 2px; max-width: 100%; line-height: 1.4; }
+.card-name { max-width: 100%; font-size: 13.5px; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.card:hover .card-name { color: var(--sl-brand-strong); }
+.card-host { max-width: 100%; font-size: 12px; color: var(--sl-muted); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+/* 磁贴两个上角：左上是已存帐号标记，右上是编辑按钮（悬停或键盘聚焦时才出现，避免每张磁贴都挂三个点） */
+.keymark { position: absolute; top: 9px; left: 10px; display: inline-flex; align-items: center; gap: 2px; color: var(--sl-muted); font-size: 11.5px; font-variant-numeric: tabular-nums; }
+.card .icon-btn { position: absolute; top: 4px; right: 4px; width: 28px; height: 28px; opacity: 0; transition: opacity .12s; }
+.card:hover .icon-btn, .card .icon-btn:focus-visible { opacity: 1; }
+/* 拖拽排序：被拖的磁贴变淡，插入位置在磁贴间隙里显示一条蓝线 */
+.card.dragging { opacity: .35; box-shadow: none; }
+.card.drop-before::before, .card.drop-after::after { content: ""; position: absolute; top: 10px; bottom: 10px; width: 3px; border-radius: 2px; background: var(--sl-brand); }
+.card.drop-before::before { left: -7px; }
+.card.drop-after::after { right: -7px; }
+.sec.drop-into .tiles { outline: 2px dashed var(--sl-brand); outline-offset: 4px; border-radius: 12px; }
+.nav-item.drop-into { background: var(--sl-brand-soft); color: var(--sl-brand-strong); box-shadow: inset 0 0 0 1.5px var(--sl-brand); }
+
+.add-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 136px; min-height: 124px; border: 1.5px dashed var(--sl-line); border-radius: var(--sl-card-radius); color: var(--sl-muted); font-size: 13px; }
+.add-tile:hover { border-color: var(--sl-brand); color: var(--sl-brand-strong); }
+/* 添加网址的输入框比磁贴宽，否则一个网址都打不下 */
+.tiles input { align-self: center; width: 240px; max-width: 100%; height: 44px; padding: 0 14px; border: 1.5px solid var(--sl-brand); border-radius: var(--sl-control-radius); background: var(--sl-surface); outline: none; }
+
+.empty { width: 100%; text-align: center; color: var(--sl-muted); line-height: 1.8; }
+.empty strong { color: var(--sl-ink); font-weight: 600; }
+
+/* ---------- 网址详情浮层 ---------- */
+.scrim { position: fixed; inset: 0; z-index: 40; }
+.pop { position: fixed; z-index: 41; width: 320px; padding: 16px; display: flex; flex-direction: column; gap: 14px; border-radius: var(--sl-card-radius); background: var(--sl-surface); box-shadow: 0 0 0 1px var(--sl-line), var(--sl-float-shadow); font-size: 13px; animation: pop-in .16s var(--sl-ease-out); }
+@keyframes pop-in { from { opacity: 0; transform: translateY(-4px); } }
+.pop-head { display: flex; align-items: flex-start; gap: 12px; }
+/* 浮层左上角图标：点击展开图标选择 */
+.pop-icon { position: relative; flex: none; border-radius: 26%; }
+.pop-icon::after { content: ""; position: absolute; inset: -3px; border: 2px solid transparent; border-radius: 30%; transition: border-color .12s; }
+.pop-icon:hover::after, .pop-icon.on::after { border-color: var(--sl-brand); }
+.icon-picker { display: flex; flex-direction: column; gap: 10px; padding: 10px; border-radius: 12px; background: var(--sl-sunken); box-shadow: inset 0 0 0 1px var(--sl-line); }
+.icon-picker .seg { display: grid; grid-template-columns: repeat(3, 1fr); }
+.icon-picker .seg button { min-height: 28px; padding: 0; font-size: 12.5px; }
+.icon-picker .seg button.on { background: var(--sl-surface); color: var(--sl-brand-strong); font-weight: 600; box-shadow: 0 0 0 1px var(--sl-line); }
+.glyphs { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; }
+.glyph { display: grid; place-items: center; aspect-ratio: 1; border-radius: 7px; color: var(--sl-ink); }
+.glyph:hover { background: var(--sl-surface); }
+.glyph.on { background: var(--sl-brand); color: var(--sl-on-brand); }
+.swatches { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 2px; }
+.swatch { width: 20px; height: 20px; border-radius: 50%; }
+.swatch.on { box-shadow: 0 0 0 2px var(--sl-sunken), 0 0 0 4px var(--sl-ink); }
+
+.pop-fields { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.pop .field { height: 34px; }
+.field-name { font-size: 14.5px; font-weight: 600; }
+.field-url { font-size: 12.5px; color: var(--sl-muted); }
+.field-url:focus { color: var(--sl-ink); }
+.pop .chip.on { background: var(--sl-brand-soft); box-shadow: inset 0 0 0 1.5px var(--sl-brand); color: var(--sl-brand-strong); font-weight: 600; }
+.pop-creds { display: flex; flex-direction: column; border-top: 1px solid var(--sl-line); }
+.pop-cred { display: flex; align-items: center; gap: 2px; padding: 8px 0; border-bottom: 1px solid var(--sl-line); color: var(--sl-muted); }
+.pop-cred-id { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.pop-cred-id span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.pop-cred-id span:first-child { color: var(--sl-ink); font-size: 13.5px; }
+.pop-cred-id span:last-child { font: 12px var(--sl-mono); }
+.pop-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.link-danger { font-size: 12.5px; color: var(--sl-danger); font-weight: 600; }
+.link-danger:hover { text-decoration: underline; }
+.pop-foot .link { font-size: 12.5px; }
+
+/* 触屏没有悬停：编辑按钮常显，并放大到好点的尺寸 */
+@media (any-pointer: coarse) {
+  .card .icon-btn { width: 36px; height: 36px; opacity: 1; }
+  .nav-item, .nav .add-cat, .nav input { height: 44px; }
+  .nav .add-cat { width: 44px; }
+}
+@media (max-width: 760px) {
+  .top { padding: 14px 16px; }
+  .main { padding: 28px 16px 48px; gap: 28px; }
+  .time { font-size: 56px; }
+}

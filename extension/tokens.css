@@ -1,0 +1,64 @@
+/* Startline 语义 token：新标签页、Popup、设置页共用一份；组件只引用这里的变量，不写死色值。
+ * 主色取自扩展图标的蓝 #2563eb，其余品牌档位由它推导；暗色只翻转变量。 */
+:root {
+  --sl-sans: -apple-system, "SF Pro Text", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  --sl-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --sl-card-radius: 14px;
+  --sl-control-radius: 9px;
+  --sl-control-height: 36px;
+  --sl-row-min-height: 56px;
+  --sl-duration: 160ms;
+  --sl-ease-out: cubic-bezier(.2, .8, .2, 1);
+}
+
+/* 浅色。次要文字比样板的 #737c8f 压深一点，12px 文字在白底和下沉底上都过 4.5:1 */
+:root, [data-theme="light"] {
+  --sl-bg: #f7f8fb;
+  --sl-surface: #ffffff;
+  --sl-sunken: #f7f8fb;
+  --sl-ink: #172033;
+  --sl-muted: #687185;
+  --sl-line: #e5e8ef;
+
+  --sl-brand: #2563eb;
+  --sl-brand-strong: color-mix(in oklch, #2563eb 86%, black);
+  --sl-brand-soft: color-mix(in oklch, #2563eb 8%, white);
+  --sl-on-brand: #ffffff;
+  --sl-glow: rgb(37 99 235 / .12);
+
+  --sl-success: #267260; --sl-success-soft: #eaf8f4;
+  --sl-warning: #94651c; --sl-warning-soft: #fff5df;
+  --sl-danger: #b1435e;  --sl-danger-soft: #fff0f3;
+
+  --sl-card-shadow: 0 0 0 1px var(--sl-line), 0 2px 8px rgba(23, 32, 51, .04);
+  --sl-hover-shadow: 0 0 0 1px color-mix(in oklab, var(--sl-brand) 35%, var(--sl-line)), 0 6px 20px rgba(23, 32, 51, .08);
+  --sl-float-shadow: 0 8px 28px rgba(27, 36, 57, .12), 0 2px 6px rgba(27, 36, 57, .04);
+  --sl-scrim: rgba(17, 20, 29, .48);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --sl-bg: #14161b;
+  --sl-surface: #252830;
+  --sl-sunken: #20232a;
+  --sl-ink: #f4f5f8;
+  --sl-muted: #b7bdc9;
+  --sl-line: #363a45;
+
+  --sl-brand: color-mix(in oklch, #2563eb 72%, white);
+  --sl-brand-strong: color-mix(in oklch, #2563eb 55%, white);
+  --sl-brand-soft: color-mix(in oklch, #2563eb 22%, #14161b);
+  --sl-on-brand: #14161b;
+  --sl-glow: rgb(37 99 235 / .14);
+
+  --sl-success: #9edcc8; --sl-success-soft: #1c342d;
+  --sl-warning: #e7c17e; --sl-warning-soft: #392f1f;
+  --sl-danger: #f1a7bc;  --sl-danger-soft: #3c222b;
+
+  --sl-card-shadow: 0 0 0 1px var(--sl-line), 0 2px 8px rgba(0, 0, 0, .12);
+  --sl-hover-shadow: 0 0 0 1px color-mix(in oklab, var(--sl-brand) 45%, var(--sl-line)), 0 6px 20px rgba(0, 0, 0, .35);
+  --sl-float-shadow: 0 10px 32px rgba(0, 0, 0, .36);
+  --sl-scrim: rgba(0, 0, 0, .56);
+  color-scheme: dark;
+}

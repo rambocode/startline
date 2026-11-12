@@ -1,0 +1,28 @@
+{
+  "type": "design",
+  "designSystems": [],
+  "primaryDesignSystem": null,
+  "assets": {
+    "Startline Prototype": {
+      "versions": [
+        {
+          "path": "Startline Prototype.html",
+          "createdAt": "2026-11-10T01:37:09.118Z",
+          "status": "needs-review"
+        },
+        {
+          "path": "Startline v2.html",
+          "createdAt": "2026-11-10T01:59:51.076Z",
+          "status": "needs-review"
+        },
+        {
+          "path": "Startline v3.html",
+          "createdAt": "2026-11-10T02:02:08.149Z",
+          "status": "needs-review"
+        }
+      ]
+    }
+  },
+  "createdAt": "2026-11-10T01:37:09.118Z",
+  "updatedAt": "2026-11-10T02:02:08.150Z"
+}

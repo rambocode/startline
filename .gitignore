@@ -1,0 +1,6 @@
+.DS_Store
+# 画布编辑器的运行文件
+.artifact-server.json
+.artifact-server.log
+# 手工备份，不进版本库
+backup/

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Startline 设置</title>
+<link rel="icon" href="icons/32.png">
+<script src="theme-boot.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+<link rel="stylesheet" href="options.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="side-brand">
+      <img src="icons/48.png" width="36" height="36" alt="">
+      <p><strong>Startline</strong><span id="ver"></span></p>
+    </div>
+    <nav class="nav" id="nav" aria-label="设置分区"></nav>
+    <!-- 窄屏时侧栏导航换成原生下拉 -->
+    <select class="field nav-select" id="navSelect" aria-label="设置分区"></select>
+    <button class="side-link" data-act="home">打开导航 <span aria-hidden="true">↗</span></button>
+  </aside>
+  <main class="work" id="work" aria-busy="true">
+    <p class="loading" role="status">正在读取…</p>
+  </main>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="dialog"></div>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+<script src="shared.js"></script>
+<script src="site-icon.js"></script>
+<script src="ui.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

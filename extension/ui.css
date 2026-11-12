@@ -1,0 +1,126 @@
+/* 扩展自有页面共用的基础样式与原子组件：按钮、输入框、开关、分段、胶囊、卡片、提示条、弹窗。
+ * 只引用 tokens.css 的语义变量。 */
+:root { --sl-hover: color-mix(in oklab, var(--sl-ink) 6%, transparent); }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--sl-bg); color: var(--sl-ink); font: 14px/1.5 var(--sl-sans); -webkit-font-smoothing: antialiased; }
+button, input, select { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+button:disabled { cursor: default; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, p { margin: 0; }
+svg { flex: none; }
+input::placeholder { color: var(--sl-muted); }
+[hidden] { display: none !important; }
+
+/* 焦点环只在键盘聚焦时出现 */
+:where(button, a, input, select, [tabindex]):focus-visible { outline: 2px solid var(--sl-brand-strong); outline-offset: 2px; }
+
+/* ---------- 按钮 ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: var(--sl-control-height); padding: 0 14px; border-radius: var(--sl-control-radius); background: var(--sl-sunken); box-shadow: inset 0 0 0 1px var(--sl-line); font-size: 13.5px; font-weight: 600; text-align: center; transition: background-color var(--sl-duration); }
+.btn:hover:not(:disabled) { background: var(--sl-hover); }
+.btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; padding: 0 16px; border-radius: var(--sl-control-radius); background: var(--sl-brand); color: var(--sl-on-brand); font-size: 14px; font-weight: 600; text-align: center; transition: background-color var(--sl-duration); }
+.btn-primary:hover:not(:disabled) { background: var(--sl-brand-strong); }
+.btn-primary:disabled { opacity: .48; }
+.btn-danger { background: var(--sl-danger); color: var(--sl-surface); box-shadow: none; }
+.btn-danger:hover:not(:disabled) { background: color-mix(in oklab, var(--sl-danger) 86%, var(--sl-ink)); }
+.btn-ghost { display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 10px; border-radius: var(--sl-control-radius); color: var(--sl-muted); font-size: 13px; font-weight: 600; }
+.btn-ghost:hover { background: var(--sl-hover); color: var(--sl-ink); }
+.link { color: var(--sl-brand-strong); font-weight: 600; }
+.link:hover { text-decoration: underline; }
+.icon-btn { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: var(--sl-control-radius); color: var(--sl-muted); }
+.icon-btn:hover:not(:disabled) { background: var(--sl-hover); color: var(--sl-ink); }
+.icon-btn:disabled { opacity: .36; }
+.icon-btn.danger:hover:not(:disabled) { background: var(--sl-danger-soft); color: var(--sl-danger); }
+
+/* ---------- 输入 ---------- */
+.field { width: 100%; height: var(--sl-control-height); padding: 0 10px; border: 1px solid var(--sl-line); border-radius: var(--sl-control-radius); background: var(--sl-surface); outline: none; }
+.field:hover { border-color: color-mix(in oklab, var(--sl-muted) 50%, var(--sl-line)); }
+.field:focus { border-color: var(--sl-brand); box-shadow: 0 0 0 3px var(--sl-brand-soft); }
+.field.bad, input.bad { border-color: var(--sl-danger) !important; }
+select.field { padding-right: 6px; }
+.search-box { display: flex; align-items: center; gap: 8px; height: var(--sl-control-height); padding: 0 12px; border-radius: var(--sl-control-radius); background: var(--sl-sunken); box-shadow: inset 0 0 0 1px var(--sl-line); color: var(--sl-muted); }
+.search-box:focus-within { background: var(--sl-surface); box-shadow: inset 0 0 0 1px var(--sl-brand), 0 0 0 3px var(--sl-brand-soft); }
+.search-box input { flex: 1; min-width: 0; border: 0; background: none; outline: none; color: var(--sl-ink); }
+kbd { font: 11px var(--sl-mono); padding: 1px 6px; border-radius: 5px; background: var(--sl-surface); box-shadow: inset 0 0 0 1px var(--sl-line); color: var(--sl-muted); }
+
+/* ---------- 开关：轨道 44×26，滑块 20 ---------- */
+.switch { position: relative; flex: none; width: 44px; height: 26px; border-radius: 999px; background: color-mix(in oklab, var(--sl-muted) 45%, var(--sl-line)); transition: background-color 180ms ease; }
+.switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .2); transition: transform 220ms var(--sl-ease-out); }
+.switch[aria-checked="true"] { background: var(--sl-brand); }
+.switch[aria-checked="true"]::after { transform: translateX(18px); }
+.switch:disabled { opacity: .48; }
+
+/* ---------- 分段（单选组） ---------- */
+.seg { display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 2px; padding: 3px; border-radius: 11px; background: var(--sl-sunken); box-shadow: inset 0 0 0 1px var(--sl-line); }
+.seg button { min-height: 30px; padding: 0 14px; border-radius: 8px; color: var(--sl-muted); font-size: 13px; }
+.seg button:hover { color: var(--sl-ink); }
+.seg button[aria-checked="true"] { background: var(--sl-surface); color: var(--sl-brand-strong); font-weight: 600; box-shadow: 0 1px 2px rgba(23, 32, 51, .08), 0 0 0 1px var(--sl-line); }
+
+/* ---------- 胶囊与分类小标签 ---------- */
+.pill { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--sl-sunken); box-shadow: inset 0 0 0 1px var(--sl-line); color: var(--sl-muted); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { min-height: 30px; padding: 4px 12px; border-radius: 999px; background: var(--sl-surface); box-shadow: inset 0 0 0 1px var(--sl-line); color: var(--sl-muted); font-size: 13px; line-height: 1.4; }
+.chip:hover { color: var(--sl-ink); box-shadow: inset 0 0 0 1px var(--sl-muted); }
+.chip[aria-checked="true"] { background: var(--sl-brand-soft); box-shadow: inset 0 0 0 1.5px var(--sl-brand); color: var(--sl-brand-strong); font-weight: 600; }
+
+/* ---------- 卡片与设置行 ---------- */
+.card { border-radius: var(--sl-card-radius); background: var(--sl-surface); box-shadow: var(--sl-card-shadow); }
+.row { display: flex; align-items: center; gap: 16px; min-height: var(--sl-row-min-height); padding: 10px 16px; }
+.row + .row { border-top: 1px solid var(--sl-line); }
+.row-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.row-label { font-size: 14px; }
+.row-desc { font-size: 12px; color: var(--sl-muted); }
+.row[data-switch-row] { cursor: pointer; }
+
+/* 网站图标底块：Chrome 图标、内置图标、字母头像共用 */
+.fav { display: inline-grid; place-items: center; flex: none; border-radius: 26%; background: var(--sl-sunken); box-shadow: inset 0 0 0 1px var(--sl-line); overflow: hidden; }
+.fav img { display: block; }
+.fav-solid { color: #fff; font-weight: 600; line-height: 1; box-shadow: none; }
+.fav-letter { background: oklch(0.93 0.045 var(--h)); color: oklch(0.45 0.13 var(--h)); font-weight: 600; line-height: 1; box-shadow: none; }
+[data-theme="dark"] .fav-letter { background: oklch(0.32 0.05 var(--h)); color: oklch(0.88 0.1 var(--h)); }
+/* 暗色下网站图标用浅色底，否则黑色图标（如 GitHub）在深色底上看不见 */
+[data-theme="dark"] .fav:not(.fav-solid):not(.fav-letter):not(.fav-img) { background: #e9ebee; }
+.fav-img { box-shadow: none; }
+.fav-img img { width: 100%; height: 100%; object-fit: contain; }
+
+/* ---------- 提示条：底部居中，悬停或聚焦时暂停计时 ---------- */
+#toast { position: fixed; z-index: 60; left: 50%; bottom: 20px; transform: translateX(-50%); width: max-content; max-width: calc(100vw - 32px); }
+.toast { display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 6px 6px 6px 14px; border-radius: 12px; background: var(--sl-ink); color: var(--sl-bg); box-shadow: var(--sl-float-shadow); font-size: 13px; animation: sl-rise .18s var(--sl-ease-out); }
+.toast span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.toast button { flex: none; height: 30px; padding: 0 10px; border-radius: 8px; color: inherit; font-weight: 600; }
+.toast button:hover { background: color-mix(in oklab, var(--sl-bg) 16%, transparent); }
+.toast .toast-x { width: 30px; padding: 0; display: grid; place-items: center; opacity: .7; }
+.toast-error::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--sl-danger); }
+@keyframes sl-rise { from { opacity: 0; transform: translateY(8px); } }
+
+/* ---------- 弹窗：标题、正文、底部操作三段 ---------- */
+.dialog-scrim { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: 12px; background: var(--sl-scrim); animation: sl-fade .16s ease; }
+.dialog { width: min(440px, 100%); max-height: calc(92dvh - 24px); display: flex; flex-direction: column; border-radius: var(--sl-card-radius); background: var(--sl-surface); box-shadow: var(--sl-float-shadow); animation: sl-rise .18s var(--sl-ease-out); }
+.dialog h2 { padding: 20px 20px 0; font-size: 16px; font-weight: 600; }
+.dialog-body { padding: 10px 20px 4px; overflow: auto; color: var(--sl-muted); font-size: 13.5px; display: flex; flex-direction: column; gap: 12px; }
+.dialog-body strong { color: var(--sl-ink); font-weight: 600; }
+.dialog-foot { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; padding: 16px 20px 20px; }
+@keyframes sl-fade { from { opacity: 0; } }
+
+/* 行内提示：成功 / 警告 / 失败各用自己的反馈色 */
+.note { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--sl-control-radius); font-size: 13px; }
+.note-error { background: var(--sl-danger-soft); color: var(--sl-danger); }
+.note-ok { background: var(--sl-success-soft); color: var(--sl-success); }
+.note-warn { background: var(--sl-warning-soft); color: var(--sl-warning); }
+.note > span { flex: 1; min-width: 0; }
+.note button { flex: none; font-weight: 600; color: inherit; text-decoration: underline; }
+
+/* ---------- 触屏与动效 ---------- */
+@media (any-pointer: coarse) {
+  .icon-btn { width: 44px; height: 44px; }
+  .btn, .btn-primary { min-height: 44px; }
+  .field, .search-box input { font-size: 16px; }
+  .field, .search-box { height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+/* 设置页里的「界面动效」总开关 */
+[data-motion="off"] *, [data-motion="off"] *::before, [data-motion="off"] *::after { transition: none !important; animation: none !important; }
